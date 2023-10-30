@@ -1,0 +1,25 @@
+package is070;
+import java.io.*;
+import java.lang.Math;
+public class swap {
+	
+	static void swapping(double m , double n)
+	{
+		double temp;
+		temp = m;
+		m = n;
+		n = temp;
+	}
+	public static void main(String args[])
+	{
+		long st = System.nanoTime();
+		double m = Math.random();
+		double n = Math.random();
+		System.out.println("m = "+m+" n = "+n);
+		swapping(m,n);
+		System.out.println("m = "+m+" n = "+n);
+		long et = System.nanoTime();
+		long ex = (et-st)/1000000;
+		System.out.println("Time taken = "+ex);
+	}
+}
