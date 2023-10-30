@@ -1,0 +1,17 @@
+package is070;
+import java.io.*;
+import java.lang.Math;
+public class random {
+	public static void main(String args[])
+	{
+		long st = System.nanoTime();
+		int arr []= new int[10000];
+		for(int i=0; i<10000; i++)
+		{
+			arr[i] = (int)Math.random()%100;
+		}
+		long et = System.nanoTime();
+		long ex = (et-st)/1000000;
+		System.out.println("Time taken = "+ex);
+	}
+}
