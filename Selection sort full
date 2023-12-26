@@ -1,0 +1,56 @@
+import java.util.*;
+class selection
+{
+    public static void select(int arr[])
+    {
+        for(int i=0; i<arr.length - 1; i++)
+        {
+            int min = i;
+            
+            for(int j=i+1; j<arr.length ; j++)
+            {
+                if(arr[j] < arr[min])
+                {
+                    min = j;
+                }
+            }
+            int temp = arr[i];
+            arr[i] = arr[min];
+            arr[min] = temp;
+        }
+    }
+    public static void main(String args[])
+    {
+        System.out.println("Enter size of array :");
+        
+        Scanner sc = new Scanner(System.in);
+        int size = sc.nextInt();
+        
+        int[] arr = new int[size];
+        System.out.println("Enter elements of array :");
+        for(int i=0; i<size; i++)
+        {
+            arr[i] = sc.nextInt();
+        }
+        
+        System.out.println("Unsorted list :");
+        for(int i=0; i<size ; i++)
+        {
+            System.out.print(arr[i]+" ");
+        }
+        System.out.println();
+        
+        long starttime = System.nanoTime();
+        select(arr);
+        long endtime = System.nanoTime();
+        long exetime = (endtime-starttime)/1000000;
+        System.out.println("Sorted list : ");
+        for(int i=0; i<size; i++)
+        {
+            System.out.print(arr[i]+" ");
+        }
+        System.out.println();
+        
+        System.out.println("Time taken : "+exetime);
+    }
+}
