@@ -1,0 +1,92 @@
+import java.util.*;
+class merging
+{
+   public static void mergesort(int[] arr)
+   {
+       int n = arr.length;
+       if(n > 1)
+       {
+           int mid = n/2;
+           int[] B = new int[mid];
+           int[] C = new int[n-mid];
+           
+           for(int i=0; i<mid; i++)
+           {
+               B[i] = arr[i];
+           }
+           
+           for(int i=mid; i<n; i++)
+           {
+               C[i-mid] = arr[i];
+           }
+           
+           mergesort(B);
+           mergesort(C);
+           merge(B,C,arr);
+       }
+   }
+   
+   public static void merge(int[] B, int[] C, int[] A)
+   {
+       int i=0, j=0, k=0;
+       int p = B.length;
+       int q = C.length;
+       while(i<p && j<q)
+       {
+           if(B[i]<=C[j])
+           {
+               A[k] = B[i];
+               i++;
+           }
+           else
+           {
+               A[k] = C[j];
+               j++;
+           }
+           k++;
+       }
+       
+       while(i<p)
+       {
+           A[k++] = B[i++];
+       }
+       while(j<q)
+       {
+           A[k++] = C[j++];
+       }
+   }
+    public static void main(String args[])
+    {
+        System.out.println("Enter size of array :");
+        
+        Scanner sc = new Scanner(System.in);
+        int size = sc.nextInt();
+        
+        int[] arr = new int[size];
+        System.out.println("Enter elements of array :");
+        for(int i=0; i<size; i++)
+        {
+            arr[i] = sc.nextInt();
+        }
+        
+        System.out.println("Unsorted list :");
+        for(int i=0; i<size ; i++)
+        {
+            System.out.print(arr[i]+" ");
+        }
+        System.out.println();
+        
+        long starttime = System.nanoTime();
+        mergesort(arr);
+        long endtime = System.nanoTime();
+        long exetime = (endtime-starttime)/1000000;
+        System.out.println("Sorted list : ");
+        for(int i=0; i<size; i++)
+        {
+            System.out.print(arr[i]+" ");
+        }
+        System.out.println();
+        
+        System.out.println("Time taken : "+exetime);
+    }
+}
