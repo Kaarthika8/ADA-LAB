@@ -1,0 +1,62 @@
+import java.util.Scanner;
+
+public class HeapSort {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int[] a;
+        int n;
+
+        System.out.println("Enter the number of elements");
+        n = scanner.nextInt();
+
+        a = new int[n];
+        
+        System.out.println("Enter the elements");
+        for (int i = 0; i < n; i++)
+            a[i] = scanner.nextInt();
+
+        long startTime = System.nanoTime();
+        heapSort(a, n);
+        long endTime = System.nanoTime();
+
+        System.out.println("Sorted elements are");
+        for (int i = 0; i < n; i++)
+            System.out.print(a[i] + " ");
+
+        System.out.println("\nTime taken by Heap sort = " + (double) (endTime - startTime) / 1000 + " microseconds");
+    }
+
+    static void heapSort(int a[], int n) {
+        for (int i = n - 1; i >= 0; i--)
+            siftDown(a, i, n - 1);
+
+        for (int i = n - 1; i >= 1; i--) {
+            int temp = a[0];
+            a[0] = a[i];
+            a[i] = temp;
+            siftDown(a, 0, i - 1);
+        }
+    }
+
+    static void siftDown(int a[], int root, int bottom) {
+        int done = 0;
+        while ((root * 2 <= bottom) && (done == 0)) {
+            int maxChild;
+            if (root * 2 == bottom)
+                maxChild = root * 2;
+            else if (a[root * 2] > a[root * 2 + 1])
+                maxChild = root * 2;
+            else
+                maxChild = root * 2 + 1;
+
+            if (a[root] < a[maxChild]) {
+                int temp = a[root];
+                a[root] = a[maxChild];
+                a[maxChild] = temp;
+                root = maxChild;
+            } else
+                done = 1;
+        }
+    }
+}
