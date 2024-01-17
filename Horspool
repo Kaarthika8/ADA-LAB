@@ -1,0 +1,57 @@
+import java.util.Scanner;
+
+public class HorspoolAlgorithm {
+
+    static char[] text, pattern;
+    static int[] table;
+    static int m, n;
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter the text");
+        String str = scanner.nextLine();
+        text = str.toCharArray();
+
+        System.out.println("Enter the pattern to be found");
+        String ptn = scanner.nextLine();
+        pattern = ptn.toCharArray();
+
+        long startTime = System.nanoTime();
+        int res = horspool(pattern, text);
+        long endTime = System.nanoTime();
+
+        if (res == -1)
+            System.out.println("\nPattern not found");
+        else
+            System.out.println("Pattern found at " + (res + 1) + " position");
+
+        System.out.println("Time of Horspool's Algorithm = " + (double) (endTime - startTime) / 1000 + " microseconds");
+    }
+
+    static void shift(char[] p) {
+        int len = p.length;
+        table = new int[1000];
+        for (int i = 0; i < 1000; i++)
+            table[i] = len;
+        for (int j = 0; j <= len - 2; j++)
+            table[p[j]] = len - 1 - j;
+    }
+
+    static int horspool(char[] p, char[] t) {
+        shift(p);
+        m = p.length;
+        n = t.length;
+        int i = m - 1;
+        while (i <= n - 1) {
+            int k = 0;
+            while (k <= m - 1 && (p[m - 1 - k] == t[i - k]))
+                k++;
+            if (k == m)
+                return i - m + 1;
+            else
+                i = i + table[t[i]];
+        }
+        return -1;
+    }
+}
