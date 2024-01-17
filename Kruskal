@@ -1,0 +1,73 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class KruskalAlgorithm {
+
+    static int min, n, x, y;
+    static int[][] cost;
+    static int[] parent;
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int count = 0, tot = 0, flag = 0;
+
+        System.out.println("Enter the number of vertices");
+        n = scanner.nextInt();
+
+        cost = new int[100][100];
+        parent = new int[100];
+
+        System.out.println("Enter the cost matrix");
+        System.out.println("Enter 999 for No edges and self loops");
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                cost[i][j] = scanner.nextInt();
+                parent[j] = 0;
+            }
+        }
+
+        long startTime = System.nanoTime();
+
+        while (count != n - 1 && min != 999) {
+            findMin();
+            flag = checkCycle(x, y);
+            if (flag == 1) {
+                System.out.println("\n" + x + "----->" + y + "==" + cost[x][y]);
+                count++;
+                tot += cost[x][y];
+            }
+            cost[x][y] = cost[y][x] = 999;
+        }
+
+        long endTime = System.nanoTime();
+        long timeTaken = endTime - startTime;
+
+        System.out.println("\nThe total cost of minimum spanning tree=" + tot);
+        System.out.println("Time taken: " + timeTaken + " nanoseconds");
+    }
+
+    static void findMin() {
+        min = 999;
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (cost[i][j] < min) {
+                    min = cost[i][j];
+                    x = i;
+                    y = j;
+                }
+            }
+        }
+    }
+
+    static int checkCycle(int x, int y) {
+        if ((parent[x] == parent[y]) && (parent[x] != 0))
+            return 0;
+        else if (parent[x] == 0 && parent[y] == 0)
+            parent[x] = parent[y] = x;
+        else if (parent[x] == 0)
+            parent[x] = parent[y];
+        else if (parent[x] != parent[y])
+            parent[y] = parent[x];
+        return 1;
+    }
+}
