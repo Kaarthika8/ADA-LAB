@@ -22,6 +22,8 @@ public class DijkstraAlgorithm {
         System.out.println("Enter the source vertex");
         v = scanner.nextInt();
 
+        long startTime = System.nanoTime();
+
         for (i = 1; i <= n; i++) {
             s[i] = 0;
             d[i] = a[v][i];
@@ -44,8 +46,13 @@ public class DijkstraAlgorithm {
                         d[i] = d[u] + a[u][i];
         }
 
+        long endTime = System.nanoTime();
+        long timeTaken = endTime - startTime;
+
         System.out.println("The shortest distance from " + v + " is ");
         for (i = 1; i <= n; i++)
             System.out.println(v + "-->" + i + "=" + d[i]);
+
+        System.out.println("Time taken: " + timeTaken + " nanoseconds");
     }
 }
