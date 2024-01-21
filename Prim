@@ -1,0 +1,57 @@
+import java.util.Scanner;
+
+public class PrimAlgorithm {
+    static int n, c[][], visited[];
+    
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.println("Enter number of vertices:");
+        n = scanner.nextInt();
+        
+        c = new int[n + 1][n + 1];
+        visited = new int[n + 1];
+        
+        System.out.println("Enter the cost matrix:");
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                c[i][j] = scanner.nextInt();
+            }
+            visited[i] = 0;
+        }
+        
+        prim();
+    }
+    
+    static void prim() {
+        int min, a = 0, b = 0, count = 0, cost = 0;
+        min = 999;
+        visited[1] = 1; // 1st vertex is visited
+        
+        long startTime = System.nanoTime(); // Record the start time
+        
+        while (count < n - 1) {
+            min = 999;
+            for (int i = 1; i <= n; i++) {
+                for (int j = 1; j <= n; j++) {
+                    if (visited[i] == 1 && visited[j] == 0 && min > c[i][j]) {
+                        min = c[i][j];
+                        a = i;
+                        b = j;
+                    }
+                }
+            }
+            
+            System.out.println(a + " ---> " + b + " = " + c[a][b]);
+            cost += c[a][b];
+            visited[b] = 1;
+            count++;
+        }
+        
+        long endTime = System.nanoTime(); // Record the end time
+        long elapsedTime = endTime - startTime;
+        
+        System.out.println("Total cost of Spanning tree is " + cost);
+        System.out.println("Time taken: " + elapsedTime + " nanoseconds");
+    }
+}
