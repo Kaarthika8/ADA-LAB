@@ -1,63 +1,52 @@
-import java.util.*;
-public class Warshall
-{
-    public static void warshall(int[][] p  , int n)
-    {
-        for(int k=1; k<=n; k++)
-        {
-            for(int i=1; i<=n; i++)
-            {
-                for(int j=1; j<=n; j++)
-                {
-                    p[i][j] = p[i][j] | (p[i][k] & p[k][j]);
-                }
-            }
-        }
+import java.util.Scanner;
+
+public class WarshallAlgorithm {
+
+    public static int max(int a, int b) {
+        return (a > b) ? a : b;
     }
-    
-    public static void main(String args[])
-    {
+
+    public static void warshall(int[][] p, int n) {
+        for (int k = 1; k <= n; k++)
+            for (int i = 1; i <= n; i++)
+                for (int j = 1; j <= n; j++)
+                    p[i][j] = max(p[i][j], p[i][k] & p[k][j]);
+    }
+
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int[][] p = new int[10][10];
-        System.out.println("Enter the no. of vertices :");
+
+        System.out.println("Enter the number of vertices:");
         int n = sc.nextInt();
-        System.out.println("Enter the no. of edges : ");
+
+        System.out.println("Enter the number of edges:");
         int e = sc.nextInt();
-        
-        for(int i=1; i<=e; i++)
-        {
-            System.out.println("Enter the end vertices of edge "+i+" :");
+
+        int[][] p = new int[10][10];
+
+        for (int i = 1; i <= e; i++) {
+            System.out.println("Enter the end vertices of edge " + i + ":");
             int u = sc.nextInt();
             int v = sc.nextInt();
             p[u][v] = 1;
         }
-        
-        System.out.println("Matrix of input data :");
-        for(int i=1; i<=n; i++)
-        {
-            for(int j=1; j<=n; j++)
-            {
-                System.out.print(p[i][j]+"\t");
+
+        System.out.println("\nMatrix of input data: ");
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                System.out.print(p[i][j] + "\t");
             }
             System.out.println();
         }
-        
-        long st = System.nanoTime();
-        warshall(p,n);
-        long et = System.nanoTime();
-        
-        long ext = (et-st)/1000000;
-        
-        System.out.println("Transitive closure :");
-        for(int i=1; i<=n; i++)
-        {
-            for(int j=1; j<=n; j++)
-            {
-                System.out.print(p[i][j]+"\t");
+
+        warshall(p, n);
+
+        System.out.println("\nTransitive closure: ");
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                System.out.print(p[i][j] + "\t");
             }
             System.out.println();
         }
-        
-        System.out.println("Time taken : "+ext+" ms");
     }
 }
