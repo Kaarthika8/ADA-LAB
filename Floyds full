@@ -55,6 +55,7 @@ public class FloydWarshall {
                 if (i != j)
                     System.out.printf("\n<%d,%d>=%d", i, j, p[i][j]);
             }
-    }
+    
     System.out.println("Time taken : "+ext+" ms");
+}
 }
