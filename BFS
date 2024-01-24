@@ -1,0 +1,63 @@
+import java.util.Scanner;
+import java.util.Queue;
+import java.util.LinkedList;
+
+public class BFSImplementation {
+    static void BFS(int[][] graph, int source, int[] visited, int n) {
+        Queue<Integer> queue = new LinkedList<>();
+        int f = 0, r = -1;
+        queue.add(source);
+
+        while (!queue.isEmpty()) {
+            int u = queue.poll();
+
+            for (int v = 1; v <= n; v++) {
+                if (graph[u][v] == 1 && visited[v] == 0) {
+                    queue.add(v);
+                    visited[v] = 1;
+                }
+            }
+        }
+    }
+
+    static void printReachability(int[] visited, int n) {
+        System.out.println("\nReachability:");
+        for (int i = 1; i <= n; i++) {
+            if (visited[i] != 0)
+                System.out.println("Node " + i + " is reachable");
+            else
+                System.out.println("Node " + i + " is not reachable");
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter the number of vertices:");
+        int n = scanner.nextInt();
+
+        int[][] graph = new int[20][20];
+        int[] visited = new int[20];
+
+        System.out.println("\nEnter the adjacency matrix:");
+        for (int i = 1; i <= n; i++)
+            for (int j = 1; j <= n; j++)
+                graph[i][j] = scanner.nextInt();
+
+        for (int i = 1; i <= n; i++)
+            visited[i] = 0;
+
+        System.out.print("\nEnter the source node:");
+        int source = scanner.nextInt();
+
+        visited[source] = 1;
+
+        long startTime = System.currentTimeMillis();
+        BFS(graph, source, visited, n);
+        long endTime = System.currentTimeMillis();
+
+        printReachability(visited, n);
+
+        System.out.println("Time taken: " + (endTime - startTime) + " milliseconds");
+    }
+}
